@@ -1,68 +1,54 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\SanPhamController;
 use App\Models\SanPham;
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
 
+// Trang chủ (home page)
+Route::view('/', 'admin.index')->name('home');
+Route::view('/home', 'layout.home')->name('index');
 
-Route::get('/', function () {
-    return view('admin.index'); // giao diện trang chủ
-})->name('home');
+// Các trang tĩnh
+Route::view('/shop', 'shop')->name('shop'); 
+Route::view('/shop-detail', 'shop-detail')->name('shop-detail'); 
+Route::view('/cart', 'cart')->name('cart'); Route::view('/checkout', 'checkout')->name('checkout'); 
+Route::view('/testimonial', 'testimonial')->name('testimonial'); 
+Route::view('/404', '404')->name('404'); Route::view('/contact', 'contact')->name('contact');
+Route::view('/service', 'service')->name('service');
+Route::view('/contact', 'contact')->name('contact');
+Route::view('/customer', 'customer')->name('customer'); 
+Route::view('/test', 'test')->name('test');
+Route::view('/admin/category', 'admin/category/category-list')->name('category'); 
+Route::view('/admin/product', 'admin/product/product-list')->name('product');
 
+// Login / Register / Logout
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Admin
 Route::middleware('auth')->group(function () {
-    Route::view('/admin', 'layout.home')->name('admin');// giao diện login
-});
 
+    // Dashboard admin → resources/views/admin/index.blade.php
+    Route::view('/admin', 'admin')->name('admin');
 
-Route::get('logout',[HomeController::class,'logout'])->name('logout');
-
-Route::get('/admin', function () {
-    return view('admin');
-})->name('admin');
-Route::get('/shop', function () {
-    return view('shop');
-})->name('shop');
-Route::get('/shop-detail', function () {
-    return view('shop-detail');
-})->name('shop-detail');
-Route::get('/cart', function () {
-    return view('cart');
-})->name('cart');
-Route::get('/checkout', function () {
-    return view('checkout');
-})->name('checkout');
-Route::get('/testimonial', function () {
-    return view('testimonial');
-})->name('testimonial');
-Route::get('/404', function () {
-    return view('404');
-})->name('404');
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
-Route::get('/admin/category', function () {
-    return view('admin/category/category-list');
-})->name('category');
-Route::get('/admin/product', function () {
-    return view('admin/product/product-list');
-})->name('product');
-Route::get('/customer', function () {
-    return view('customer');
-})->name('customer');
-Route::get('/test', function () {
-    return view('test');
-})->name('test');
-
-Route::middleware('auth')->group(function () {
     Route::get('/admin/sanpham', [SanPhamController::class, 'index'])->name('sanpham');
+
 });
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-?>
+// Trang sau khi login
+Route::get('/home', [HomeController::class, 'index'])
+    ->middleware('auth')
+    ->name('home');

@@ -249,9 +249,10 @@
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             <!-- Logout mới tạo-->
-            <a class="btn btn-primary" href="{{ route('logout') }}" >Logout</a>
-
-
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: inline;">
+    @csrf
+    <button type="submit" class="btn btn-primary">Logout</button>
+</form>
 
           </div>
         </div>

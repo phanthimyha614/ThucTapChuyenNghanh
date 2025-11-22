@@ -1,10 +1,25 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\admin\SanPhamController;
+use App\Models\SanPham;
+
+
 
 Route::get('/', function () {
-    return view('index');
+    return view('admin.index'); // giao diện trang chủ
 })->name('home');
+
+Route::middleware('auth')->group(function () {
+    Route::view('/admin', 'layout.home')->name('admin');// giao diện login
+});
+
+
+Route::get('logout',[HomeController::class,'logout'])->name('logout');
+
 Route::get('/admin', function () {
     return view('admin');
 })->name('admin');
@@ -41,4 +56,13 @@ Route::get('/customer', function () {
 Route::get('/test', function () {
     return view('test');
 })->name('test');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/admin/sanpham', [SanPhamController::class, 'index'])->name('sanpham');
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 ?>

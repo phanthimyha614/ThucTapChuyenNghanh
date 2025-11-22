@@ -1,9 +1,9 @@
 @extends('layout/admin')
 @section('body')
-<div class =”card-footer small muted”> 
-        <table class="table">
-            <h1> Loại </h1>
-            <a href =""class="btn btn-primary"> add </a>
+<div class ="card-footer small muted">
+    <table class="table">
+        <h1> Category</h1>
+        <a href ="" class="btn btn-primary"> add</a>
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -11,38 +11,27 @@
       <th scope="col">Last</th>
       <th scope="col">Handle</th>
       <th scope="col">View</th>
-      <th scope="col">edit</th>
+      <th scope="col">Edit</th>
       <th scope="col">Delete</th>
     </tr>
   </thead>
   <tbody>
+    @forelse($categories as $object)
+  
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
+      <th scope="row">{{$object->id}}</th>
+      <td>{{$object->name}}</td>
       <td>Otto</td>
       <td>@mdo</td>
-      <td><i class="fa-solid fa-eye"></i></td>
-       <td><i class="fa-solid fa-pen-to-square text-warming"></i></td>
-       <td><i class="fa-solid fa-trash text-danger"></i></td>
+      <td><a href =""><i class="fa-solid fa-eye text-info"></i></a></td>
+      <td><a href =""><i class="fa-solid fa-pen-to-square text-warming"></i></a></td>
+      <td><a href =""><i class="fa-solid fa-trash text-danger"></i></a></td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-       <td><i class="fa-solid fa-eye"></i></td>
-       <td><i class="fa-solid fa-pen-to-square text-warming"></i></td>
-       <td><i class="fa-solid fa-trash text-danger"></i></td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>John</td>
-      <td>Doe</td>
-      <td>@social</td>
-       <td><i class="fa-solid fa-eye"></i></td>
-       <td><i class="fa-solid fa-pen-to-square text-warming"></i></td>
-       <td><i class="fa-solid fa-trash text-danger"></i></td>
-    </tr>
+   @empty
+   <h1> chua co du lieu</h1>
+   @endforelse
+    
   </tbody>
 </table>
+</div>
 @endsection

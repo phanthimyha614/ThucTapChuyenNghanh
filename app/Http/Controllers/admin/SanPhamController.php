@@ -12,7 +12,7 @@ class SanPhamController extends Controller
     {
         $this->middleware('auth');
         $sanpham = SanPham::orderBy('id', 'desc')->get();
-        view()->share(['products' => $sanpham]);
+        view()->share(['sanpham' => $sanpham]);
     }
 
     public function index()

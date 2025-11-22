@@ -69,7 +69,7 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseExamplePages">
             <li>
-              <a href="{{ route('category') }}">Loại</a>
+              <a href="{{ route('category') }}">Category List</a>
             </li>
             <li>
               <a href="{{ route('product') }}">Sản Phẩm</a>
